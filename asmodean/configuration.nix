@@ -30,8 +30,7 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
-  networking.networkmanager.enable = true;
-
+  
   # Set your time zone.
   time.timeZone = "America/Chicago";
 
@@ -114,7 +113,7 @@
   users.users.tim = {
     isNormalUser = true;
     description = "tim";
-    extraGroups = ["networkmanager" "wheel" "docker"];
+    extraGroups = ["networkmanager" "wheel" "docker" "incus-admin"];
     packages = with pkgs; [
       kdePackages.kate
       #  thunderbird
@@ -143,7 +142,7 @@
     enable = true;
     # Certain features, including CLI integration and system authentication support,
     # require enabling PolKit integration on some desktop environments (e.g. Plasma).
-    polkitPolicyOwners = ["yourUsernameHere"];
+    polkitPolicyOwners = ["tim"];
   };
 
   environment.etc = {
@@ -172,11 +171,11 @@
     gcc
     yt-dlp
     cifs-utils
-    cifs-utils
     nfs-utils
     obs-studio
     kdePackages.kdenlive
     kdePackages.isoimagewriter
+    kdePackages.partitionmanager
     blender
     lshw
     mc
@@ -198,13 +197,16 @@
     fish
     htop
     btop
-     ghostty
+    ghostty
     discord
     signal-desktop
     filezilla
     alejandra
     obsidian
     zoom-us
+    kdePackages.kjournald
+    distrobox
+    boxbuddy
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -231,6 +233,8 @@
     nssmdns4 = true;
     enable = true;
   };
+
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];

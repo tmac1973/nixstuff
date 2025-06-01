@@ -9,7 +9,10 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-  ];
+    "${builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware.git"; }}/common/cpu/amd"
+    "${builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware.git"; }}/common/gpu/amd"
+    "${builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware.git"; }}/common/pc/laptop"
+];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -60,11 +63,7 @@
   # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
   services.xserver.videoDrivers = ["amdgpu"];
-  # Enable 3d graphics
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
+
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
