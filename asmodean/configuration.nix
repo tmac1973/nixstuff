@@ -19,7 +19,12 @@
   # Use latest kernel.
   # boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelPackages = pkgs.linuxPackages_6_13;
-  boot.kernelParams = ["nouveau.modeset=0"];
+  # to fix issue where ollama is not cuda accellerated after waking from sleep
+  boot.extraModprobeConfig = ''
+  blacklist nouveau
+  options nvidia NVreg_PreserveVideoMemoryAllocations=1
+  options nvidia NVreg_TemporaryFilePath=/tmp
+'';
 
   networking.hostName = "asmodean"; # Define your hostname.
 
@@ -68,6 +73,8 @@
   };
 
   hardware.nvidia.open = true;
+  hardware.nvidia.powerManagement.enable = false;
+  hardware.nvidia.powerManagement.finegrained = false;
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   hardware.nvidia.prime = {
     offload.enable = true;
