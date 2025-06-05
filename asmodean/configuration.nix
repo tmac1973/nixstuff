@@ -214,6 +214,9 @@
     kdePackages.kjournald
     distrobox
     boxbuddy
+    fastfetch
+    gpu-screen-recorder # CLI
+    gpu-screen-recorder-gtk # GUI
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
