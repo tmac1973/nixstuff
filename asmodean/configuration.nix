@@ -22,8 +22,6 @@
   # to fix issue where ollama is not cuda accellerated after waking from sleep
   boot.extraModprobeConfig = ''
   blacklist nouveau
-  options nvidia NVreg_PreserveVideoMemoryAllocations=1
-  options nvidia NVreg_TemporaryFilePath=/tmp
 '';
 
   networking.hostName = "asmodean"; # Define your hostname.
@@ -120,7 +118,7 @@
   users.users.tim = {
     isNormalUser = true;
     description = "tim";
-    extraGroups = ["networkmanager" "wheel" "docker" "incus-admin"];
+    extraGroups = ["networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       kdePackages.kate
       #  thunderbird
