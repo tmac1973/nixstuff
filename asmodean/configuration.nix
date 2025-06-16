@@ -17,9 +17,9 @@
   boot.initrd.kernelModules = ["amdgpu"];
 
   # Use latest kernel.
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
+  #boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelPackages = pkgs.linuxPackages_6_13;
-  # to fix issue where ollama is not cuda accellerated after waking from sleep
+
   boot.extraModprobeConfig = ''
   blacklist nouveau
 '';
@@ -56,6 +56,16 @@
   services.rpcbind.enable = true;
   fileSystems."/iso" = {
     device = "truenas.local:/mnt/pool0/isos/template/iso";
+    fsType = "nfs";
+    options = ["x-systemd.automount" "noauto" "x-systemd.idle-timeout=600"];
+  };
+  fileSystems."/netstuff" = {
+    device = "truenas.local:/mnt/pool0/stuff";
+    fsType = "nfs";
+    options = ["x-systemd.automount" "noauto" "x-systemd.idle-timeout=600"];
+  };
+  fileSystems."/netmedia" = {
+    device = "truenas.local:/mnt/pool0/media";
     fsType = "nfs";
     options = ["x-systemd.automount" "noauto" "x-systemd.idle-timeout=600"];
   };
@@ -242,12 +252,12 @@
     enable = true;
   };
 
-
+  services.flatpak.enable = true;
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
