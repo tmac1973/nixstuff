@@ -24,6 +24,8 @@
   blacklist nouveau
 '';
 
+  hardware.bluetooth.enable = true; # enables support for Bluetooth
+  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
   networking.hostName = "asmodean"; # Define your hostname.
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
