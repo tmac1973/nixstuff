@@ -228,6 +228,7 @@
     gpu-screen-recorder # CLI
     gpu-screen-recorder-gtk # GUI
     bottles
+    nix-output-monitor
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
