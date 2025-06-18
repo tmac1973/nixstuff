@@ -227,6 +227,7 @@
     fastfetch
     gpu-screen-recorder # CLI
     gpu-screen-recorder-gtk # GUI
+    bottles
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
