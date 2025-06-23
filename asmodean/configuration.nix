@@ -21,21 +21,21 @@
   boot.kernelPackages = pkgs.linuxPackages_6_13;
 
   boot.extraModprobeConfig = ''
-  blacklist nouveau
-'';
+    blacklist nouveau
+  '';
 
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
   networking.hostName = "asmodean"; # Define your hostname.
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
-  nix.settings.trusted-users = [ "root" "tim" ];
+  nix.settings.trusted-users = ["root" "tim"];
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
-  
+
   # Set your time zone.
   time.timeZone = "America/Chicago";
 
@@ -130,7 +130,7 @@
   users.users.tim = {
     isNormalUser = true;
     description = "tim";
-    extraGroups = ["networkmanager" "wheel" "docker" ];
+    extraGroups = ["networkmanager" "wheel" "docker"];
     packages = with pkgs; [
       kdePackages.kate
       #  thunderbird
@@ -143,7 +143,7 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.cudaSupport = true;
-   nix.settings = {
+  nix.settings = {
     substituters = [
       "https://cuda-maintainers.cachix.org"
       # Add other substituters if you use them, e.g., "https://nix-community.cachix.org"
@@ -229,6 +229,8 @@
     gpu-screen-recorder-gtk # GUI
     bottles
     nix-output-monitor
+    chromium
+    handbrake
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -247,9 +249,9 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.ollama = {
-  	enable = true;
-	acceleration = "cuda";
-	};
+    enable = true;
+    acceleration = "cuda";
+  };
 
   services.avahi = {
     nssmdns4 = true;
