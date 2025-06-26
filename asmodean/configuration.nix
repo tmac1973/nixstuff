@@ -269,7 +269,7 @@
         # };
         # Connect to a local Ollama server running on the host:
         environment = {
-          "OLLAMA_BASE_URL" = "http://host.docker.internal:11434"; # Directs the container to your host's Ollama
+          "OLLAMA_BASE_URL" = "http://127.0.0.1:11434";
         };
         # For Nvidia GPU support (requires nvidia-container-toolkit setup on NixOS):
         # extraOptions = [
@@ -310,10 +310,10 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
 
-  system.autoUpgrade = {
-    enable = true;
-    channel = "https://nixos.org/channels/nixos-22.05";
-  };
+  # system.autoUpgrade = {
+  #   enable = true;
+  #   channel = "https://nixos.org/channels/nixos-25.05";
+  # };
 
   ### clean system
   nix = {
