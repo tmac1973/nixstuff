@@ -17,8 +17,8 @@
   boot.initrd.kernelModules = ["amdgpu"];
 
   # Use latest kernel.
-  #boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelPackages = pkgs.linuxPackages_6_13;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  #boot.kernelPackages = pkgs.linuxPackages_6_13;
 
   boot.extraModprobeConfig = ''
     blacklist nouveau
@@ -75,23 +75,23 @@
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
-  services.xserver.videoDrivers = ["amdgpu" "nvidia"];
+  services.xserver.videoDrivers = ["amdgpu"];
   # Enable 3d graphics
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
   };
 
-  hardware.nvidia.open = true;
-  hardware.nvidia.powerManagement.enable = false;
-  hardware.nvidia.powerManagement.finegrained = false;
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-  hardware.nvidia.prime = {
-    offload.enable = true;
+  # hardware.nvidia.open = true;
+  # hardware.nvidia.powerManagement.enable = false;
+  # hardware.nvidia.powerManagement.finegrained = false;
+  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+  # hardware.nvidia.prime = {
+  #   offload.enable = true;
 
-    amdgpuBusId = "PCI:10:00:0";
-    nvidiaBusId = "PCI:11:00:0";
-  };
+  #   amdgpuBusId = "PCI:10:00:0";
+  #   nvidiaBusId = "PCI:11:00:0";
+  # };
 
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
@@ -243,7 +243,43 @@
   # };
 
   virtualisation.docker.enable = true;
-  virtualisation.vmware.host.enable = true;
+
+  # Enable oci-containers and specify the web-ui container
+  # Enable oci-containers and specify the open-webui container
+
+  virtualisation.oci-containers = {
+    backend = "docker";
+    containers = {
+      open-webui = {
+        # Changed container name to open-webui
+        image = "ghcr.io/open-webui/open-webui:main"; # Official image for Open WebUI
+        ports = [
+          "3000:8080" # Map host port 3000 to container port 8080 as per documentation
+        ];
+        extraOptions = [
+          "--restart=always" # Ensure the container restarts with the system
+        ];
+        volumes = [
+          "open-webui:/app/backend/data" # Use a named Docker volume for persistent data
+        ];
+
+        # To disable the login page for single-user setup (optional):
+        # environment = {
+        #   "WEBUI_AUTH" = "False";
+        # };
+        # Connect to a local Ollama server running on the host:
+        environment = {
+          "OLLAMA_BASE_URL" = "http://host.docker.internal:11434"; # Directs the container to your host's Ollama
+        };
+        # For Nvidia GPU support (requires nvidia-container-toolkit setup on NixOS):
+        # extraOptions = [
+        #   "--gpus=all"
+        # ];
+      };
+    };
+  };
+
+  #virtualisation.vmware.host.enable = true;
 
   # List services that you want to enable:
 
@@ -251,7 +287,7 @@
   services.openssh.enable = true;
   services.ollama = {
     enable = true;
-    acceleration = "cuda";
+    acceleration = "rocm";
   };
 
   services.avahi = {
