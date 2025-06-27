@@ -208,6 +208,7 @@
     pkgs.libreoffice-qt6-fresh
     slack
     pinta
+    cpu-x
     gimp3-with-plugins
     inkscape-with-extensions
     dysk
@@ -244,7 +245,6 @@
 
   virtualisation.docker.enable = true;
 
-  # Enable oci-containers and specify the web-ui container
   # Enable oci-containers and specify the open-webui container
 
   virtualisation.oci-containers = {
