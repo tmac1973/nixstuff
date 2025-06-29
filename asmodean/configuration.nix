@@ -233,6 +233,8 @@
     chromium
     handbrake
     vlc
+    unrar
+    rar
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
