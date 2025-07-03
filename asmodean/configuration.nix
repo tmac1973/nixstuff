@@ -220,7 +220,7 @@
     signal-desktop
     filezilla
     alejandra
-    obsidian
+    logseq
     zoom-us
     kdePackages.kjournald
     distrobox
@@ -235,6 +235,7 @@
     vlc
     unrar
     rar
+    mangohud
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
