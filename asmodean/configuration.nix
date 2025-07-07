@@ -17,8 +17,8 @@
   boot.initrd.kernelModules = ["amdgpu"];
 
   # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  #boot.kernelPackages = pkgs.linuxPackages_6_13;
+  #boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_6_13;
 
   boot.extraModprobeConfig = ''
     blacklist nouveau
@@ -236,6 +236,8 @@
     unrar
     rar
     mangohud
+    muse
+    lmms
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -250,39 +252,39 @@
 
   # Enable oci-containers and specify the open-webui container
 
-  virtualisation.oci-containers = {
-    backend = "docker";
-    containers = {
-      open-webui = {
-        # Changed container name to open-webui
-        image = "ghcr.io/open-webui/open-webui:main"; # Official image for Open WebUI
-        ports = [
-          "3000:8080" # Map host port 3000 to container port 8080 as per documentation
-        ];
-        extraOptions = [
-          "--restart=always" # Ensure the container restarts with the system
-        ];
-        volumes = [
-          "open-webui:/app/backend/data" # Use a named Docker volume for persistent data
-        ];
+  # virtualisation.oci-containers = {
+  #   backend = "docker";
+  #   containers = {
+  #     open-webui = {
+  #       # Changed container name to open-webui
+  #       image = "ghcr.io/open-webui/open-webui:main"; # Official image for Open WebUI
+  #       ports = [
+  #         "3000:8080" # Map host port 3000 to container port 8080 as per documentation
+  #       ];
+  #       extraOptions = [
+  #         "--restart=always" # Ensure the container restarts with the system
+  #       ];
+  #       volumes = [
+  #         "open-webui:/app/backend/data" # Use a named Docker volume for persistent data
+  #       ];
 
-        # To disable the login page for single-user setup (optional):
-        # environment = {
-        #   "WEBUI_AUTH" = "False";
-        # };
-        # Connect to a local Ollama server running on the host:
-        environment = {
-          "OLLAMA_BASE_URL" = "http://127.0.0.1:11434";
-        };
-        # For Nvidia GPU support (requires nvidia-container-toolkit setup on NixOS):
-        # extraOptions = [
-        #   "--gpus=all"
-        # ];
-      };
-    };
-  };
+  #       # To disable the login page for single-user setup (optional):
+  #       # environment = {
+  #       #   "WEBUI_AUTH" = "False";
+  #       # };
+  #       # Connect to a local Ollama server running on the host:
+  #       environment = {
+  #         "OLLAMA_BASE_URL" = "http://127.0.0.1:11434";
+  #       };
+  #       # For Nvidia GPU support (requires nvidia-container-toolkit setup on NixOS):
+  #       # extraOptions = [
+  #       #   "--gpus=all"
+  #       # ];
+  #     };
+  #   };
+  # };
 
-  #virtualisation.vmware.host.enable = true;
+  virtualisation.vmware.host.enable = true;
 
   # List services that you want to enable:
 
