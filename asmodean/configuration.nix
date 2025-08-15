@@ -17,8 +17,8 @@
   boot.initrd.kernelModules = ["amdgpu"];
 
   # Use latest kernel.
-  #boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelPackages = pkgs.linuxPackages_6_13;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  #boot.kernelPackages = pkgs.linuxPackages_6_13;
 
   boot.extraModprobeConfig = ''
     blacklist nouveau
@@ -142,17 +142,17 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.cudaSupport = true;
-  nix.settings = {
-    substituters = [
-      "https://cuda-maintainers.cachix.org"
-      # Add other substituters if you use them, e.g., "https://nix-community.cachix.org"
-    ];
-    trusted-public-keys = [
-      "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
-      # Add other trusted keys
-    ];
-  };
+  # nixpkgs.config.cudaSupport = true;
+  # nix.settings = {
+  #   substituters = [
+  #     "https://cuda-maintainers.cachix.org"
+  #     # Add other substituters if you use them, e.g., "https://nix-community.cachix.org"
+  #   ];
+  #   trusted-public-keys = [
+  #     "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
+  #     # Add other trusted keys
+  #   ];
+  # };
 
   programs._1password.enable = true;
   programs._1password-gui = {
@@ -193,7 +193,7 @@
     kdePackages.kdenlive
     kdePackages.isoimagewriter
     kdePackages.partitionmanager
-    blender
+    blender-hip #amd accelerated version
     lshw
     mc
     rsync
@@ -240,6 +240,7 @@
     lmms
     stress
     s-tui
+    waveterm
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -251,7 +252,13 @@
   # };
 
   virtualisation.docker.enable = true;
+  programs.virt-manager.enable = true;
 
+  users.groups.libvirtd.members = ["tim"];
+
+  virtualisation.libvirtd.enable = true;
+
+  virtualisation.spiceUSBRedirection.enable = true;
   # Enable oci-containers and specify the open-webui container
 
   # virtualisation.oci-containers = {
@@ -286,7 +293,7 @@
   #   };
   # };
 
-  virtualisation.vmware.host.enable = true;
+  #virtualisation.vmware.host.enable = true;
 
   # List services that you want to enable:
 
