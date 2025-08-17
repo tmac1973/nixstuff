@@ -1,0 +1,4 @@
+#!/bin/bash
+# Update only the stable nixpkgs channel
+nix flake update . --update-input nixpkgs
+echo "Updated stable channel. Run './rebuild' to apply changes."
