@@ -17,4 +17,14 @@
     ./modules/services.nix
     ./modules/packages.nix
   ];
+
+  # 1Password browser integration (needs to be in main config for flake compatibility)
+  environment.etc = {
+    "1password/custom_allowed_browsers" = {
+      text = ''
+        brave
+      '';
+      mode = "0755";
+    };
+  };
 }

@@ -19,15 +19,6 @@
     polkitPolicyOwners = ["tim"];
   };
 
-  # 1Password browser integration
-  environment.etc = {
-    "1password/custom_allowed_browsers" = {
-      text = ''
-        brave
-      '';
-      mode = "0755";
-    };
-  };
 
   # System packages - stable versions
   environment.systemPackages = with pkgs; [
